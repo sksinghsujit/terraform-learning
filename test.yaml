@@ -1,0 +1,10 @@
+- name: Test Playbook
+  hosts: localhost
+  vars:
+    greet: 'hello'
+    to_whom: 'world'
+
+  tasks:
+    - name: Greeting
+      debug:
+        msg: "{{ greet }} {{ to_whom }}!"
