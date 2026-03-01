@@ -28,3 +28,14 @@ resource "aap_job" "run_config" {
     provisioned_by = "HCP-Terraform-Agent"
   })
 }
+
+# 2. The Solution: Use a 'depends_on' inside the output 
+# to tell Terraform: "Don't even try to read the ID until the Job is actually finished."
+output "ansible_job_id" {
+  # We use the 'try' function to prevent the Plan-time crash
+  value = try(aap_job.run_config.id, "ID will appear after Apply")
+}
+
+output "ansible_job_url" {
+  value = try(aap_job.run_config.url, "URL will appear after Apply")
+}
