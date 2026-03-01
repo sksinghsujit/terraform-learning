@@ -22,10 +22,12 @@ data "aap_job_template" "config_app" {
 
 resource "aap_job" "run_config" {
   job_template_id = data.aap_job_template.config_app.id
+  wait_for_completion = true
   
   # Ensure this is valid JSON
   extra_vars = jsonencode({
     provisioned_by = "HCP-Terraform-Agent"
+    run_id         = "${timestamp()}"
   })
 }
 
