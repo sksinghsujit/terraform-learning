@@ -28,7 +28,3 @@ resource "aap_job" "run_config" {
     provisioned_by = "HCP-Terraform-Agent"
   })
 }
-
-output "ansible_job_id" {
-  value = aap_job.run_config.id
-}
