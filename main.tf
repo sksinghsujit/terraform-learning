@@ -20,22 +20,15 @@ data "aap_job_template" "config_app" {
   organization_name = "Default"
 }
 
-# 2. Launch the Job using the 'aap_job' resource
 resource "aap_job" "run_config" {
   job_template_id = data.aap_job_template.config_app.id
   
-  # Optional: If your template requires an inventory to be "prompted on launch"
-  # inventory_id = 123 
-
-  # Pass data from Terraform to Ansible
+  # Ensure this is valid JSON
   extra_vars = jsonencode({
-    target_env     = "development"
     provisioned_by = "HCP-Terraform-Agent"
   })
 }
 
-# Update your output block to this:
 output "ansible_job_id" {
-  # The aap_job resource exports 'job_id' as the actual ID from AAP
-  value = aap_job.run_config.job_id
+  value = aap_job.run_config.id
 }
