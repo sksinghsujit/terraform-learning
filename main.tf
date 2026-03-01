@@ -16,7 +16,7 @@ provider "aap" {
 
 # 1. Look up your existing Job Template
 data "aap_job_template" "config_app" {
-  name              = "Post-Provisioning Config" # Ensure this exactly matches AAP
+  name              = "test-job-template" # Ensure this exactly matches AAP
   organization_name = "Default"
 }
 
