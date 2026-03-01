@@ -34,7 +34,8 @@ resource "aap_job" "run_config" {
   })
 }
 
-# Output the Job ID for tracking
+# Update your output block to this:
 output "ansible_job_id" {
-  value = aap_job.run_config.id
+  # The aap_job resource exports 'job_id' as the actual ID from AAP
+  value = aap_job.run_config.job_id
 }
