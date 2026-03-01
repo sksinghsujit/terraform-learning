@@ -22,6 +22,7 @@ data "aap_job_template" "config_app" {
 
 # 2. Launch the Job
 # In AAP Provider v1.4+, we use the 'aap_job_launch' action
+# This needs to be validated
 resource "aap_job_launch" "run_config" {
   job_template_id = data.aap_job_template.config_app.id
   
