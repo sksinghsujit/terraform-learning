@@ -14,29 +14,27 @@ provider "aap" {
   insecure_skip_verify = true # Set to false if you have valid SSL
 }
 
-# 1. Look up your existing Job Template by name
+# 1. Look up your existing Job Template
 data "aap_job_template" "config_app" {
-  name              = "test-jt"
+  name              = "Post-Provisioning Config" # Ensure this exactly matches AAP
   organization_name = "Default"
 }
 
-# 2. Launch the Job
-# In AAP Provider v1.4+, we use the 'aap_job' action
-# This needs to be validated
+# 2. Launch the Job using the 'aap_job' resource
 resource "aap_job" "run_config" {
   job_template_id = data.aap_job_template.config_app.id
-  # inventory_id = 123
   
-  # Pass dynamic data from Terraform to Ansible!
+  # Optional: If your template requires an inventory to be "prompted on launch"
+  # inventory_id = 123 
+
+  # Pass data from Terraform to Ansible
   extra_vars = jsonencode({
-    target_env  = "development"
+    target_env     = "development"
     provisioned_by = "HCP-Terraform-Agent"
-    # Example: pass an IP from a VM you just created
-    # server_ip = aws_instance.web.private_ip 
   })
 }
 
-# Output the Job ID so you can track it in the HCP UI logs
+# Output the Job ID for tracking
 output "ansible_job_id" {
-  value = aap_job.run_config.job_id
+  value = aap_job.run_config.id
 }
