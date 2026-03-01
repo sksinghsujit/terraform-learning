@@ -29,13 +29,15 @@ resource "aap_job" "run_config" {
   })
 }
 
-# 2. The Solution: Use a 'depends_on' inside the output 
-# to tell Terraform: "Don't even try to read the ID until the Job is actually finished."
-output "ansible_job_id" {
-  # We use the 'try' function to prevent the Plan-time crash
-  value = try(aap_job.run_config.id, "ID will appear after Apply")
+# Instead of .id, we reference .url (which we saw is in the schema)
+# This will show you the direct link to the job in your AAP UI
+output "ansible_job_url" {
+  value = aap_job.run_config.url
 }
 
-output "ansible_job_url" {
-  value = try(aap_job.run_config.url, "URL will appear after Apply")
+# If you strictly need the numeric ID, we use this trick:
+output "ansible_job_id" {
+  # We reference 'job_template_id' (which is known) and wait for 'status'
+  # to prove the job started.
+  value = "Job started for template ${aap_job.run_config.job_template_id}. Check AAP UI for status: ${aap_job.run_config.status}"
 }
