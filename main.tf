@@ -14,9 +14,9 @@ provider "aap" {
   insecure_skip_verify = true # Set to false if you have valid SSL
 }
 
-# 1. Look up your existing Job Template
+# Test using a new job flow template
 data "aap_job_template" "config_app" {
-  name              = "say-hello-world" # Ensure this exactly matches AAP
+  name              = "say-hello-world"
   organization_name = "Default"
 }
 
