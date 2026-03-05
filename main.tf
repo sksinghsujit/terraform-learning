@@ -9,7 +9,7 @@ terraform {
 
 # The provider uses the variables you set in the HCP UI
 provider "aap" {
-  host                = var.AAP_HOST
+  host                = var.AAP_HOST_OCP07
   token               = var.AAP_TOKEN
   insecure_skip_verify = true # Set to false if you have valid SSL
 }
